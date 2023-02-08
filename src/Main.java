@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 
 		String url = "jdbc:mysql://localhost:3306/nazioni";
 		String user = "root";
@@ -33,10 +33,11 @@ public class Main {
 
 				try (ResultSet rs = ps.executeQuery()) {
 
-					System.out.println("\n NAZIONI \t\t\t\t CONTINENTE ");
+					System.out.println("\n NAZIONI \t\t\t\t CONTINENTE \n");
 					while (rs.next()) {
 						System.out.println(
-								rs.getString(1) + "\t\t\t\t\t" + rs.getString (5));
+								rs.getString(1) + "\n" +  "\t\t\t\t\t" +
+						        rs.getString  (5));
 
 					}
 				}

@@ -1,3 +1,4 @@
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,6 +14,9 @@ public class Main {
 		String user = "root";
 		String password = "root";
 		Scanner s = new Scanner(System.in);
+		
+		System.out.print("Inserisci una parola da cercare: ");
+		String parolaUtente = s.nextLine();
 
 		// CONNESSIONE
 		try (Connection con = DriverManager.getConnection(url, user, password)) {
@@ -21,16 +25,18 @@ public class Main {
 			String sql = "select countries.name , countries.country_id ,regions.name ,regions.region_id ,  continents.name \r\n"
 					+ "from countries \r\n" + "join regions on countries.region_id = regions.region_id \r\n"
 					+ "join continents on continents.continent_id = regions.continent_id\r\n"
+					+ "Where countries.name Like ?"
 					+ "order by countries.name";
 
 			try (PreparedStatement ps = con.prepareStatement(sql)) {
+				ps.setString(1, "%"+ parolaUtente + "%");
 
 				try (ResultSet rs = ps.executeQuery()) {
 
 					System.out.println("\n NAZIONI \t\t\t\t CONTINENTE ");
 					while (rs.next()) {
 						System.out.println(
-								rs.getString("countries.name") + "\t\t\t\t\t" + rs.getString("continents.name"));
+								rs.getString(1) + "\t\t\t\t\t" + rs.getString (5));
 
 					}
 				}
